@@ -1,0 +1,245 @@
+﻿<Window x:Class="Pomodoro_Timer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:Pomodoro_Timer.ViewModels"
+        mc:Ignorable="d"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        MinWidth="{Binding Path=TimerWindowWidth}"
+        MaxWidth="{Binding Path=TimerWindowWidth}"
+        MinHeight="{Binding Path=TimerWindowHeight}"
+        MaxHeight="{Binding Path=TimerWindowHeight}"
+        WindowState="{Binding TimerWindowState, Mode=TwoWay}"
+        >
+    <Window.DataContext>
+        <vm:TimerHandlerViewModel />
+    </Window.DataContext>
+    <Window.Resources>
+        <Style x:Key="StartButtonStyle" TargetType="{x:Type Button}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Border Margin="20"
+                                Background="{Binding Path=StartButtonBackground}"
+                                CornerRadius="5"
+                                BorderBrush="{Binding Path=StartButtonBorderBrush}"
+                                BorderThickness="1"
+                                Cursor="Hand">
+                            <ContentControl Content="Старт"
+                                            FontSize="14"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Foreground="{Binding Path=StartButtonForeground}"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Cursor" Value="Hand" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="PauseButtonStyle" TargetType="{x:Type Button}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Border Margin="20"
+                                Background="{Binding Path=PauseButtonBackground}"
+                                CornerRadius="5"
+                                BorderBrush="{Binding Path=PauseButtonBorderBrush}"
+                                BorderThickness="1"
+                                Cursor="Hand">
+                            <ContentControl Content="Пауза"
+                                            FontSize="14"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Foreground="{Binding Path=PauseButtonForeground}"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Cursor" Value="Hand" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="StopButtonStyle" TargetType="{x:Type Button}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Border Margin="20"
+                                Background="{Binding Path=StopButtonBackground}"
+                                CornerRadius="5"
+                                BorderBrush="{Binding Path=StopButtonBorderBrush}"
+                                BorderThickness="1"
+                                Cursor="Hand">
+                            <ContentControl Content="Стоп"
+                                            FontSize="14"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Foreground="{Binding Path=StopButtonForeground}"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Cursor" Value="Hand" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="Margin" Value="20" />
+            <Setter Property="Cursor" Value="Hand" />
+        </Style>
+        <Style TargetType="Grid">
+            <Setter Property="Background" Value="White" />
+        </Style>
+        <Style TargetType="Label">
+            <Setter Property="FontSize" Value="26" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="Foreground" Value="#075606" />
+        </Style>
+        <Style TargetType="Menu">
+            <Setter Property="Background" Value="#C8C8C8" />
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10*" />
+            <RowDefinition Height="6*" />
+            <RowDefinition Height="74*" />
+            <RowDefinition Height="20*" />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Background="#3F3F46">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="7*" />
+                <ColumnDefinition Width="75*" />
+                <ColumnDefinition Width="9*" />
+                <ColumnDefinition Width="9*" />
+            </Grid.ColumnDefinitions>
+            <Image Source="{Binding PomodoroTimerIconImageSource}"
+                   Margin="1"/>
+            <Label Grid.Row="0"
+                   Grid.Column="1"
+                   HorizontalAlignment="Left" 
+                   FontSize="14" 
+                   Foreground="White" 
+                   Content="Pomodoro Timer" />
+            <Button Margin="0" Grid.Row="0" Grid.Column="2" 
+                    Background="#D1D2D6"
+                    Command="{Binding MinimizeWindow}">
+                <Image Source="{Binding MinimizeImageSource}" />
+            </Button>
+            <Button Margin="0" Grid.Row="0" Grid.Column="3" 
+                    Background="#E81123"
+                    Command="{Binding CloseWindow}">
+                <Image Source="{Binding TimerMainWindowCloseImageSource}" />
+            </Button>
+        </Grid>
+        <Grid Grid.Row="1">
+            <Menu>
+                <MenuItem Header="Опции" FontSize="13">
+                    <MenuItem Header="Настроить таймер" Command="{Binding OpenSettings}" />
+                </MenuItem>
+            </Menu>
+        </Grid>
+        <Canvas Grid.Row="2" Margin="150 20 0 0">
+            <Ellipse Stroke="Black" StrokeThickness="0" 
+                  Width="208" Height="208" />
+            <Ellipse Stroke="Black" StrokeThickness="0" 
+                     Width="196" Height="196" />
+            <Path Stroke="{Binding ArcColor}" StrokeThickness="6" >
+                <Path.Data>
+                    <PathGeometry>
+                        <PathFigure StartPoint="100, 0" IsClosed="False">
+                            <ArcSegment Point="{Binding EndXY_Arc1Point}" Size="100, 100"
+                                        SweepDirection="Clockwise"
+                                        IsStroked="True"
+                                        IsLargeArc="False"
+                                        />
+                        </PathFigure>
+                        <PathFigure StartPoint="200, 100" IsClosed="False">
+                            <ArcSegment Point="{Binding EndXY_Arc2Point}" Size="100, 100"
+                                        SweepDirection="Clockwise"
+                                        IsStroked="True"
+                                        IsLargeArc="False"
+                                        />
+
+                        </PathFigure>
+                        <PathFigure StartPoint="100, 200" IsClosed="False">
+                            <ArcSegment Point="{Binding EndXY_Arc3Point}" Size="100, 100"
+                                        SweepDirection="Clockwise"
+                                        IsStroked="True"
+                                        IsLargeArc="False"
+                                        />
+                        </PathFigure>
+                        <PathFigure StartPoint="0, 100" IsClosed="False">
+                            <ArcSegment Point="{Binding EndXY_Arc4Point}" Size="100, 100"
+                                        SweepDirection="Clockwise"
+                                        IsStroked="True"
+                                        IsLargeArc="False"
+                                        />
+                        </PathFigure>
+                    </PathGeometry>
+                </Path.Data>
+            </Path>
+            <Path Stroke="#467AD5" StrokeThickness="6" Opacity="0.2">
+                <Path.Data>
+                    <PathGeometry>
+                        <PathFigure StartPoint="100, 0"
+                                    IsClosed="False"
+                                    IsFilled="True">
+                            <ArcSegment Point="99.99, 0"
+                                        Size="100, 100"
+                                        IsStroked="True"
+                                        IsLargeArc="True"
+                                        SweepDirection="Clockwise"/>
+                        </PathFigure>
+                    </PathGeometry>
+                </Path.Data>
+            </Path>
+        </Canvas>
+        <Canvas Grid.Row="2" Margin="150 20 0 0"
+               >
+            <Ellipse Canvas.Top="3.5" Canvas.Left="3" Stroke="Black" StrokeThickness="1"
+                     Width="194" Height="194"
+                     />
+
+        </Canvas>
+        <Canvas Grid.Row="2" Margin="140 10 0 0"
+               >
+            <Ellipse Canvas.Top="6" Canvas.Left="6" Stroke="Black" StrokeThickness="1"
+                     Width="208" Height="208"
+                     />
+        </Canvas>
+        <Label Content="{Binding TimeLeft, Mode=TwoWay}" Grid.Row="2" />
+        <Grid Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" 
+                    x:Name="StartButton"
+                    Style="{DynamicResource StartButtonStyle}"
+                    Command="{Binding StartTimer}">
+
+            </Button>
+            <Button Grid.Column="1" 
+                    Style="{DynamicResource PauseButtonStyle}"
+                    Command="{Binding PauseTimer}"
+                    >
+            </Button>
+            <Button Grid.Column="2" 
+                    Style="{DynamicResource StopButtonStyle}"
+                    Command="{Binding StopTimer}">
+            </Button>
+        </Grid>
+    </Grid>
+</Window>

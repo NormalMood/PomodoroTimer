@@ -1,0 +1,279 @@
+﻿<Window x:Class="Pomodoro_Timer.Views.SettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Pomodoro_Timer.ViewModels"   
+        mc:Ignorable="d"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        MinHeight="{Binding Path=SettingsWindowHeight}"
+        MaxHeight="{Binding Path=SettingsWindowHeight}"
+        MinWidth="{Binding Path=SettingsWindowWidth}"
+        MaxWidth="{Binding Path=SettingsWindowWidth}"
+        >
+    <Window.DataContext>
+        <local:TimerSettingsViewModel />
+    </Window.DataContext>
+    <Grid>
+        <Grid.Resources>
+            <Style x:Key="SetStandardSettingsButtonStyle" TargetType="{x:Type Button}">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Border  BorderBrush="Black"
+                                     BorderThickness="1" 
+                                     CornerRadius="5" 
+                                     Margin="10 5 1 25"
+                                     Background="#007ACC"
+                                     Cursor="Hand"
+                                     >
+                                <ContentControl Content="Установить по умолч."
+                                                Foreground="White"
+                                                HorizontalAlignment="Center"/>
+
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <EventTrigger RoutedEvent="PreviewMouseDown">
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <ThicknessAnimation Storyboard.TargetProperty="Margin"
+                                                                Duration="0:0:0.100" To="2,2,0,0"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger>
+                                <EventTrigger RoutedEvent="PreviewMouseUp">
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <ThicknessAnimation Storyboard.TargetProperty="Margin"
+                                                                Duration="0:0:0.100" To="0"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Style.Triggers>
+                    <Trigger Property="IsPressed" Value="True">
+                        <Setter Property="Cursor" Value="Hand" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+            
+            <Style x:Key="SaveNewSettingsButtonStyle" TargetType="{x:Type Button}">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate>
+                            <Border BorderBrush="Black"
+                                    BorderThickness="1"
+                                    CornerRadius="5"
+                                    Margin="25 5 25 25"
+                                    Background="#007ACC"
+                                    Width="80"
+                                    Cursor="Hand">
+                                <ContentControl Content="Сохранить"
+                                                Foreground="White"
+                                                HorizontalAlignment="Center"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <EventTrigger RoutedEvent="PreviewMouseDown">
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <ThicknessAnimation Storyboard.TargetProperty="Margin"
+                                                                Duration="0:0:0.100" To="2,2,0,0"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger>
+                                <EventTrigger RoutedEvent="PreviewMouseUp">
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <ThicknessAnimation Storyboard.TargetProperty="Margin"
+                                                                Duration="0:0:0.100" To="0"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Style.Triggers>
+                    <Trigger Property="IsPressed" Value="True">
+                        <Setter Property="Cursor" Value="Hand" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+            <Style TargetType="TextBlock">
+                <Setter Property="Margin" Value="30 20"/>
+                <Setter Property="FontSize" Value="13" />
+            </Style>
+            <Style TargetType="Button">
+                <Setter Property="Margin" Value="10 5 1 25" />
+                <Setter Property="Background" Value="#007ACC"/>
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="BorderBrush" Value="Black" />
+                <Setter Property="BorderThickness" Value="1" />
+                <Setter Property="Cursor" Value="Hand" />
+                
+            </Style>
+            <Style TargetType="CheckBox">
+                <Setter Property="Margin" Value="30 8"/>
+                <Setter Property="FontSize" Value="13" />
+                <Setter Property="Cursor" Value="Hand" />
+            </Style>
+       
+            <Style x:Key="ColonStyle" TargetType="TextBlock">
+                <Setter Property="Foreground" Value="#007ACC" />
+                <Setter Property="Margin" Value="0 14" />
+                <Setter Property="FontSize" Value="20" />
+            </Style>
+            
+            <Style x:Key="TextBoxStyle" TargetType="TextBox">
+                <Setter Property="Height" Value="22" />
+                <Setter Property="Width" Value="22" />
+                <Setter Property="Background" Value="White" />
+                <Setter Property="Foreground" Value="Black" />
+                <Setter Property="VerticalAlignment" Value="Center" />
+                <Setter Property="FontSize" Value="15" />
+                <Setter Property="Padding" Value="0" />
+                <Setter Property="MaxLength" Value="2" />
+                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="TextBox">
+                            <Grid Height="{TemplateBinding Height}"
+                                  Width="{TemplateBinding Width}"
+                                  SnapsToDevicePixels="True">
+                                <Border x:Name="Background" BorderThickness="2"
+                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                        Background="{TemplateBinding Background}"/>
+                                <ScrollViewer x:Name="PART_ContentHost"
+                                              BorderThickness="0" 
+                                              IsTabStop="False"
+                                              VerticalAlignment="{TemplateBinding VerticalAlignment}"
+                                              Background="{x:Null}"
+                                              FontSize="{TemplateBinding FontSize}"
+                                              Foreground="{TemplateBinding Foreground}"/>
+
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </Grid.Resources>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="32"/>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="265" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Row="0" Background="#3F3F46" Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="89.5*" />
+                <ColumnDefinition Width="10.5*" />
+            </Grid.ColumnDefinitions>
+            <Label Content="Настройки" 
+                   Grid.Column="0"
+                   Foreground="White"
+                   FontSize="14"/>
+            <Button Background="#E81123" 
+                    Grid.Column="1"
+                    Cursor="Hand"
+                    Command="{Binding CloseSettingsWindow}"
+                    Margin="0">
+                <Image Source="{Binding SettingsWindowCloseImageSource}" />
+            </Button>
+        </Grid>
+        <TextBlock Text='Длительность одного "помидора":' Grid.Column="0" Grid.Row="1" />
+        <TextBlock Text="Длительность короткого отдыха:" Grid.Column="0" Grid.Row="2"/>
+        <TextBlock xml:space="preserve"  Grid.Column="0" Grid.Row="3" Margin="30 10">Длительность
+продолжительного отдыха:</TextBlock>
+        <Grid Grid.Row="1" Grid.Column="1" Grid.RowSpan="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="40" />
+                <ColumnDefinition Width="5" />
+                <ColumnDefinition Width="40" />
+                <ColumnDefinition Width="5" />
+                <ColumnDefinition Width="40" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            
+            <!---->
+            
+            <TextBox Grid.Column="0" Grid.Row="0"
+                     Text="{Binding WorkTimeHours, Mode=TwoWay}"
+                     Style="{StaticResource TextBoxStyle}"
+                     BorderBrush="{Binding TextBoxWorkHoursBorderBrush}"/>
+            <TextBlock Style="{StaticResource ColonStyle}" Text=":" Grid.Column="1" Grid.Row="0"/>
+            <TextBox Grid.Column="2" Grid.Row="0" 
+                     Text="{Binding WorkTimeMinutes, Mode=TwoWay}"
+                     Style="{StaticResource TextBoxStyle}"
+                     BorderBrush="{Binding TextBoxWorkMinBorderBrush}"/>
+            <TextBlock Style="{StaticResource ColonStyle}" Text=":" Grid.Column="3" Grid.Row="0" />
+            <TextBox Grid.Column="4" Grid.Row="0" 
+                     Text="{Binding WorkTimeSeconds, Mode=TwoWay}"
+                     Style="{StaticResource TextBoxStyle}"
+                     BorderBrush="{Binding TextBoxWorkSecBorderBrush}"/>
+            
+            <!---->
+
+            <TextBox Grid.Column="0" Grid.Row="1"
+                     Text="{Binding ShortRestTimeHours, Mode=TwoWay}"
+                     Style="{StaticResource TextBoxStyle}"
+                     BorderBrush="{Binding TextBoxShortRestHoursBorderBrush}"/>
+            <TextBlock Style="{StaticResource ColonStyle}" Text=":" Grid.Column="1" Grid.Row="1"/>
+            <TextBox Grid.Column="2" Grid.Row="1"
+                     Text="{Binding ShortRestTimeMinutes, Mode=TwoWay}"
+                     Style="{StaticResource TextBoxStyle}"
+                     BorderBrush="{Binding TextBoxShortRestMinBorderBrush}"/>
+            <TextBlock Style="{StaticResource ColonStyle}" Text=":" Grid.Column="3" Grid.Row="1" />
+            <TextBox Grid.Column="4" Grid.Row="1"
+                     Text="{Binding ShortRestTimeSeconds, Mode=TwoWay}"
+                     Style="{StaticResource TextBoxStyle}"
+                     BorderBrush="{Binding TextBoxShortRestSecBorderBrush}"/>
+            
+            <!---->
+
+            <TextBox Grid.Column="0" Grid.Row="2"
+                     Text="{Binding LongRestTimeHours, Mode=TwoWay}"
+                     Style="{StaticResource TextBoxStyle}"
+                     BorderBrush="{Binding TextBoxLongRestHoursBorderBrush}"/>
+            <TextBlock Style="{StaticResource ColonStyle}" Text=":" Grid.Column="1" Grid.Row="2"/>
+            <TextBox Grid.Column="2" Grid.Row="2" 
+                     Text="{Binding LongRestTimeMinutes, Mode=TwoWay}"
+                     Style="{StaticResource TextBoxStyle}"
+                     BorderBrush="{Binding TextBoxLongRestMinBorderBrush}"/>
+            <TextBlock Style="{StaticResource ColonStyle}" Text=":" Grid.Column="3" Grid.Row="2" />
+            <TextBox Grid.Column="4" Grid.Row="2" 
+                     Text="{Binding LongRestTimeSeconds, Mode=TwoWay}"
+                     Style="{StaticResource TextBoxStyle}"
+                     BorderBrush="{Binding TextBoxLongRestSecBorderBrush}"/>
+        </Grid>
+        
+        <Grid Grid.Row="4" Grid.ColumnSpan="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <CheckBox IsChecked="{Binding IsPlayingMusicAllowed, Mode=TwoWay}" Content="Вкл. звуки" />
+            <Button Grid.Column="1" 
+                    Command="{Binding SaveDefaultSettings}"
+                    Style="{DynamicResource SetStandardSettingsButtonStyle}">
+            </Button>
+            <Button Grid.Column="2" 
+                    Command="{Binding SaveSettings}" 
+                    Style="{DynamicResource SaveNewSettingsButtonStyle}">
+            </Button>
+        </Grid>
+    </Grid>
+</Window>
