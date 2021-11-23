@@ -398,6 +398,7 @@ namespace Pomodoro_Timer.ViewModels
                 return new DelegateCommand((obj) =>
                 {
                     SetDefaultTimerSettings();
+                    SetStandardBorderBrushForAllTextBoxes();
                     SetNewSettings();
                 });
             }
